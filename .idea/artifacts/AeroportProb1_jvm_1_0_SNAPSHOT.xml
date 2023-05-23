@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AeroportProb1-jvm-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="AeroportProb1-jvm-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="AeroportProb1.jvmMain" />
+    </root>
+  </artifact>
+</component>
