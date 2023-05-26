@@ -88,7 +88,7 @@ class PlaneLocalCrudDataSourceImpl(private val appDatabase: AppDatabase): PlaneL
     }
 
 
-    override suspend fun removeById(id: Int) {
+    override suspend fun removeById(id: ObjectId) {
         appDatabase.db.write {
             query<PlaneLocal>("id == $0",id).first().find()?.let {
                 try {

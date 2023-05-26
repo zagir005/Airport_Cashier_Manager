@@ -1,8 +1,11 @@
 package screens.planes.list
 
+import cafe.adriel.voyager.core.model.coroutineScope
 import common.BaseStateScreenModel
 import data.plane.datasource.PlaneLocalCrudDataSource
 import data.plane.model.PlaneLocal
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PlaneScreenModel(
     private val planeDataSource: PlaneLocalCrudDataSource
@@ -12,7 +15,6 @@ class PlaneScreenModel(
 
     init {
         loadUsers()
-        println(planesList)
     }
 
     private fun loadUsers() {
@@ -65,7 +67,7 @@ class PlaneScreenModel(
         fun getPlaneCategories(planeLocal: PlaneLocal): Map<String, Int> {
             val seatsCategories = mutableMapOf<String, Int>()
             planeLocal.seats.forEach {
-                seatsCategories[it.categoryName]?.plus(1) ?: 1
+                seatsCategories[it.categoryName] = it.seatInfo.count()
             }
             return seatsCategories
         }

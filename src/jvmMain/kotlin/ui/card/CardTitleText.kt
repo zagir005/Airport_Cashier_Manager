@@ -1,4 +1,4 @@
-package ui
+package ui.card
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.MaterialTheme
@@ -11,12 +11,15 @@ import androidx.compose.ui.text.font.FontWeight
 @Composable
 fun CardTitleText(
     text: String,
-    rowScope: RowScope
+    rowScope: RowScope,
+    textModifier: RowScope.(Modifier) -> Modifier = {
+        it
+    }
 ){
     with(rowScope){
         Text(
             text = text,
-            modifier = Modifier.align(Alignment.CenterVertically),
+            modifier = textModifier(rowScope, Modifier.align(Alignment.CenterVertically)),
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.ExtraLight
             )

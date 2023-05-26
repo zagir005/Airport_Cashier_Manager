@@ -6,9 +6,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import data.plane.model.PlaneLocal
-import ui.CardTitleText
-import ui.CardWithOptionBtn
+import ui.card.CardTitleText
 import ui.LabelText
+import ui.card.head.EditHeadCard
 
 
 @Composable
@@ -16,11 +16,11 @@ fun PlaneInfoCard(
     planeLocal: PlaneLocal,
     editInfoOnClick: (PlaneLocal) -> Unit = {}
 ) {
-    CardWithOptionBtn(
+    EditHeadCard(
         title = {
             CardTitleText("Информация", this)
         },
-        optionBtnClick = {
+        editBtnClick = {
             editInfoOnClick(planeLocal)
         }
     ) {

@@ -20,8 +20,9 @@ fun ToolPanel(
 ){
     var searchValue by remember { mutableStateOf("") }
 
-    Column {
-
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ){
         Row(
             modifier = Modifier.padding(4.dp).fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -63,6 +64,11 @@ fun ToolPanel(
                 Icon(Icons.Default.Add,"")
             }
         }
+
+        Divider(
+            modifier = Modifier.padding(2.dp),
+            thickness = 2.dp
+        )
     }
 
 }

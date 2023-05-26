@@ -9,7 +9,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.plane.model.PlaneLocal
 import screens.planes.model.PlaneSeatCategory
-import ui.CardTitleText
-import ui.CardWithOptionBtn
-import ui.ElevatedCardWithOptionBtn
+import ui.card.CardTitleText
+import ui.card.head.CustomHeadCard
 import ui.LabelText
+import ui.card.head.ElevatedEditDeleteHeadCard
 
 
 @Composable
@@ -34,21 +35,25 @@ fun PlaneSeatsCard(
     editSeatsCategory: (PlaneSeatCategory) -> Unit = {},
     removeSeatsCategory: (PlaneSeatCategory) -> Unit = {}
 ) {
-    CardWithOptionBtn(
+    CustomHeadCard(
         title = {
             CardTitleText("Места самолета", this)
         },
-        optionBtnClick = {
-            addSeatsCategory()
-        },
-        icon = Icons.Default.Add
+        firstBtn = {
+            IconButton(
+                onClick = {
+                    addSeatsCategory()
+                }
+            ){
+                Icon(Icons.Default.Add,"")
+            }
+        }
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(300.dp),
-            userScrollEnabled = false
+            columns = GridCells.Adaptive(300.dp)
         ) {
             items(seatsCategoriesList) { seatCategory ->
-                ElevatedCardWithOptionBtn(
+                ElevatedEditDeleteHeadCard(
                     title = {
                         Text(
                             text = seatCategory.categoryName,
@@ -59,14 +64,13 @@ fun PlaneSeatsCard(
                             )
                         )
                     },
-                    optionBtnClick = {
+                    editBtnClick = {
                         editSeatsCategory(seatCategory)
                     },
-                    secondOptionBtnClick = {
+                    deleteBtnClick = {
                         removeSeatsCategory(seatCategory)
                     },
                     cardModifier = Modifier.wrapContentSize().padding(4.dp),
-                    secondIcon = Icons.Default.Clear
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(2.dp),

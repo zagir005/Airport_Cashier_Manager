@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import screens.planes.model.PlaneSeatCategory
 import ui.*
+import ui.icon.errorIcon
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

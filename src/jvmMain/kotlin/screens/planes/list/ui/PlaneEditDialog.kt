@@ -1,20 +1,16 @@
 package screens.planes.list.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import data.plane.model.PlaneLocal
 import ui.SaveOrCancelButtons
-import ui.errorIcon
+import ui.icon.errorIcon
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +45,7 @@ fun PlaneEditDialog(
 
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier.padding(4.dp).fillMaxWidth(),
+            modifier = Modifier.padding(4.dp).fillMaxSize(),
         ) {
             TextField(
                 value = codeName,

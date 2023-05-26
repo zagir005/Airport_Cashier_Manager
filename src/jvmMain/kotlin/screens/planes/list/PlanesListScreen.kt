@@ -1,8 +1,12 @@
 package screens.planes.list
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
@@ -41,7 +45,10 @@ class PlanesListScreen(
             )
         }
 
-        Column {
+        val scrollStateRemember = rememberScrollState()
+        Column(
+            modifier = Modifier.scrollable(scrollStateRemember,Orientation.Vertical)
+        ) {
             ToolPanel(
                 searchCall = {
                     screenModel.planeSearch(it)
@@ -51,19 +58,19 @@ class PlanesListScreen(
                     showPlaneEditDialog = true
                 }
             )
-            Divider(
-                modifier = Modifier.padding(2.dp),
-                thickness = 2.dp
-            )
+
             when (val state = screenState.value) {
                 PlaneScreenState.Loading -> {
-                    CircularProgressIndicator()
+                    Box(modifier = Modifier.fillMaxSize()){
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
                 }
 
                 is PlaneScreenState.PlanesListLoaded -> {
                     PlanesList(
                         planeList = state.planeList,
-                        seatCategoriesList = PlaneScreenModel.getCategoriesOfPlanes(state.planeList),
                         editPlane = {
                             editablePlane = it
                             showPlaneEditDialog = true

@@ -23,11 +23,11 @@ fun main() = application {
     ) {
         val tabItems = listOf(
             AccountTabScreen,
-            AirportsTabScreen,
+            TicketsTabScreen,
             ClientsTabScreen,
             FlightsTabScreen,
+            AirportsTabScreen,
             PlanesTab,
-            TicketsTabScreen,
             ReportsTabScreen
         )
 

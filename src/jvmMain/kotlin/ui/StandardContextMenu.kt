@@ -5,7 +5,7 @@ import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.runtime.Composable
 
 @Composable
-fun StandardContextMenu(
+fun EditDeleteContextMenu(
     editClick: () -> Unit,
     deleteClick: () -> Unit,
     block: @Composable () -> Unit

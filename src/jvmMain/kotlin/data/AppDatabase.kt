@@ -1,5 +1,6 @@
 package data
 
+import data.airport.model.AirportLocal
 import data.plane.model.PlaneLocal
 import data.plane.model.PlaneSeatLocal
 import data.plane.model.SeatInfoLocal
@@ -12,7 +13,8 @@ class AppDatabase {
         schema = setOf(
             PlaneLocal::class,
             PlaneSeatLocal::class,
-            SeatInfoLocal::class
+            SeatInfoLocal::class,
+            AirportLocal::class
         )
     )
         .deleteRealmIfMigrationNeeded()

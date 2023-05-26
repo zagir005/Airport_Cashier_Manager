@@ -1,4 +1,4 @@
-package ui
+package ui.icon
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 
 val errorIcon: @Composable () -> Unit = {
-            Icon(
-                painterResource("error.svg"),
-                "",
-                modifier = Modifier
-                    .width(Icons.Default.Warning.defaultWidth)
-                    .height(Icons.Default.Warning.defaultHeight)
-            )
-        }
+    Icon(
+        painterResource("error.svg"),
+        "",
+        modifier = Modifier
+            .width(Icons.Default.Warning.defaultWidth)
+            .height(Icons.Default.Warning.defaultHeight)
+    )
+}

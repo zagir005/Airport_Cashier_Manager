@@ -3,18 +3,15 @@ package screens.planes.details
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import data.AppDatabase
 import data.plane.datasourceimpl.PlaneLocalCrudDataSourceImpl
-import data.plane.model.PlaneLocal
 import org.mongodb.kbson.ObjectId
-import screens.planes.details.ui.EditSeatsCategoryDialog
-import screens.planes.details.ui.PlaneInfoCard
-import screens.planes.details.ui.PlaneSeatsCard
-import screens.planes.model.PlaneSeatCategory
+import screens.planes.details.ui.PlaneDetails
 import ui.*
 
 class PlaneDetailScreen(
@@ -33,7 +30,11 @@ class PlaneDetailScreen(
 
         when (val state = screenState) {
             PlaneDetailsState.Loading -> {
-                CircularProgressIndicator()
+                Box(modifier = Modifier.fillMaxSize()){
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             }
 
             is PlaneDetailsState.PlaneIsLoaded -> {
@@ -54,52 +55,6 @@ class PlaneDetailScreen(
     }
 }
 
-@Composable
-fun PlaneDetails(planeLocal: PlaneLocal, planeDetailsModel: PlaneDetailsModel) {
-    var editSeatCategoryDialogIsOpen by remember { mutableStateOf(false) }
-    var editableSeatCategory by remember { mutableStateOf(PlaneSeatCategory(planeLocal.id)) }
-
-    if (editSeatCategoryDialogIsOpen){
-        EditSeatsCategoryDialog(
-            seatCategory = editableSeatCategory,
-            isOpen = editSeatCategoryDialogIsOpen,
-            addSeatCategory = {
-                planeDetailsModel.addSeatCategory(it)
-                editSeatCategoryDialogIsOpen = false
-                editableSeatCategory = PlaneSeatCategory(planeLocal.id)
-            },
-            updateSeatCategory = {
-                planeDetailsModel.updatePlaneSeat(it)
-                editSeatCategoryDialogIsOpen = false
-                editableSeatCategory = PlaneSeatCategory(planeLocal.id)
-            },
-            onClose = {
-                editSeatCategoryDialogIsOpen = false
-                editableSeatCategory = PlaneSeatCategory(planeLocal.id)
-            }
-        )
-    }
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        PlaneInfoCard(planeLocal)
-        PlaneSeatsCard(
-            planeLocal = planeLocal,
-            seatsCategoriesList = PlaneDetailsModel.getPlaneSeatsCategories(planeLocal),
-            addSeatsCategory = {
-                editSeatCategoryDialogIsOpen = true
-            },
-            editSeatsCategory = {
-                editableSeatCategory = it
-                editSeatCategoryDialogIsOpen = true
-            },
-            removeSeatsCategory = {
-                planeDetailsModel.removePlaneSeats(it)
-            }
-        )
-    }
-}
 
 
 

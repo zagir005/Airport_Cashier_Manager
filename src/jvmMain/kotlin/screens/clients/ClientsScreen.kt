@@ -17,6 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import common.annotatedString
+import common.gender
+import common.plus
+import common.toDate
 import domain.model.Client
 import ui.*
 import java.text.SimpleDateFormat
@@ -150,7 +154,7 @@ fun ClientCard(
         },
         modifier = Modifier.padding(4.dp)
     ) {
-        StandardContextMenu(
+        EditDeleteContextMenu(
             editClick = {
                 redactClient(client)
             },
