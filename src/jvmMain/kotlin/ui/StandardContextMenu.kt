@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun StandardContextMenu(
-    redactClick: () -> Unit,
+    editClick: () -> Unit,
     deleteClick: () -> Unit,
     block: @Composable () -> Unit
 ){
@@ -14,7 +14,7 @@ fun StandardContextMenu(
         items = {
             listOf(
                 ContextMenuItem("Редактировать") {
-                    redactClick()
+                    editClick()
                 },
                 ContextMenuItem("Удалить"){
                     deleteClick()

@@ -5,21 +5,41 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.ToolBar
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import ui.ToolPanel
+
+object FlightsTabScreen: Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(
+            index = 0u,
+            title = "Рейсы",
+            icon = painterResource("flight.svg")
+        )
+
+    @Composable
+    override fun Content() {
+        FlightScreen()
+    }
+
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlightScreen(){
     Column {
-        ToolBar()
+        ToolPanel()
         Divider(
             modifier = Modifier.padding(2.dp),
             thickness = 2.dp
@@ -80,7 +100,7 @@ fun FlightCard(){
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(4.dp)
             ) {
-                Image(painterResource("icon _airplane_.svg"),"")
+                Image(painterResource("icon _airplane_.svg"),"", modifier = Modifier.width(100.dp).height(120.dp))
             }
             Column(
                 verticalArrangement = Arrangement.Center,

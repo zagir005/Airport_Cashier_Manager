@@ -13,52 +13,56 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ToolBar(
+fun ToolPanel(
     searchCall: (request: String) -> Unit = {},
     filterBtnClick: () -> Unit = {},
-    addBtnClick: () -> Unit = {}
+    addBtnClick: () -> Unit = {},
 ){
     var searchValue by remember { mutableStateOf("") }
 
-    Row(
-        modifier = Modifier.padding(4.dp).fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        TextField(
-            value = searchValue,
-            onValueChange = { text: String ->
-                searchValue = text
-                searchCall(text)
-            },
-            label = {
-                Text("Поиск")
-            },
-            singleLine = true,
-            leadingIcon = {
-                Icon(Icons.Default.Search,"")
-            },
-            modifier = Modifier.weight(1f)
-        )
-        Spacer(
-            modifier = Modifier.width(8.dp)
-        )
-        IconButton(
-            onClick = {
-                filterBtnClick()
+    Column {
+
+        Row(
+            modifier = Modifier.padding(4.dp).fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = searchValue,
+                onValueChange = { text: String ->
+                    searchValue = text
+                    searchCall(text)
+                },
+                label = {
+                    Text("Поиск")
+                },
+                singleLine = true,
+                leadingIcon = {
+                    Icon(Icons.Default.Search,"")
+                },
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+            IconButton(
+                onClick = {
+                    filterBtnClick()
+                }
+            ){
+                Icon(painterResource("filter.svg"),"")
             }
-        ){
-            Icon(painterResource("filter.svg"),"")
-        }
-        Spacer(
-            modifier = Modifier.width(8.dp)
-        )
-        FloatingActionButton(
-            onClick = {
-                addBtnClick()
-            },
-            shape = RoundedCornerShape(16.dp)
-        ){
-            Icon(Icons.Default.Add,"")
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+            FloatingActionButton(
+                onClick = {
+                    addBtnClick()
+                },
+                shape = RoundedCornerShape(16.dp)
+            ){
+                Icon(Icons.Default.Add,"")
+            }
         }
     }
+
 }

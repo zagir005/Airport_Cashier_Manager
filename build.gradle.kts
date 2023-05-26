@@ -16,6 +16,7 @@ repositories {
 }
 
 kotlin {
+    val voyagerVersion = "1.0.0-rc05"
     jvm {
         jvmToolchain(11)
         withJava()
@@ -26,9 +27,18 @@ kotlin {
                 implementation(compose.desktop.currentOs)
                 implementation("org.jetbrains.compose.material3:material3-desktop:1.5.0-dev1043")
                 implementation("com.marosseleng.android:compose-material3-datetime-pickers:0.7.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation("io.realm.kotlin:library-base:1.8.0")
                 implementation("io.realm.kotlin:library-sync:1.8.0")
+
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+
+                val kotlinCoroutinesVersion = "1.7.0"
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutinesVersion")
                 implementation(kotlin("reflect"))
             }
         }

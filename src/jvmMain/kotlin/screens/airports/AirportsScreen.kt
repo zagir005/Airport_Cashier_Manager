@@ -7,17 +7,34 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import model.*
-import screens.airplanes.PlaneCard
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import domain.model.Airport
 import ui.LabelText
 import ui.StandardContextMenu
-import ui.ToolBar
+import ui.ToolPanel
 
+object AirportsTabScreen: Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(
+            index = 0u,
+            "Аэропорты",
+            icon = painterResource("airport.svg")
+        )
+
+    @Composable
+    override fun Content() {
+        AirportScreen()
+    }
+
+}
 @Composable
 fun AirportScreen(){
     Column {
-        ToolBar()
+        ToolPanel()
         Divider(
             modifier = Modifier.padding(2.dp),
             thickness = 2.dp
@@ -26,7 +43,7 @@ fun AirportScreen(){
             GridCells.Adaptive(300.dp),
             contentPadding = PaddingValues(4.dp)
         ){
-            items(airportList){
+            items(emptyList<Airport>()){
                 AirportCard(it)
             }
         }
@@ -46,7 +63,7 @@ fun AirportCard(
         deleteClick = {
             deleteAirport(airport)
         },
-        redactClick = {
+        editClick = {
             redactAirport(airport)
         }
     ){

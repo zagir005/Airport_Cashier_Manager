@@ -1,4 +1,4 @@
-package model
+package domain.model
 
 import java.util.*
 
@@ -12,7 +12,7 @@ data class Client(
     val id: Int = Random().nextInt()
 ){
     companion object{
-        fun getEmptyInstance(): Client{
+        fun getEmptyInstance(): Client {
             return Client(
                 "","","","",Date(1),true
             )

@@ -1,29 +1,22 @@
-package screens.tickets
+package screens.reports
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
-import ui.ObjRedactDialog
 
-object TicketsTabScreen: Tab {
+object ReportsTabScreen: Tab{
     override val options: TabOptions
         @Composable
         get() = TabOptions(
             index = 0u,
-            title = "Билеты",
-            icon = painterResource("ticket.svg")
+            title = "Отчеты",
+            icon = painterResource("report.svg")
         )
-
     @Composable
     override fun Content() {
-        TicketsScreen()
+        Text("Отчеты")
     }
 
-}
-
-@Composable
-fun TicketsScreen(){
-    Text("Ticket")
 }

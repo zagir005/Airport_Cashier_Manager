@@ -10,10 +10,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import model.Client
 
 @Composable
-fun SaveNCancelButtons(
+fun SaveOrCancelButtons(
     cancelBtnClick: () -> Unit = {},
     saveBtnClick: () -> Unit = {}
 ){

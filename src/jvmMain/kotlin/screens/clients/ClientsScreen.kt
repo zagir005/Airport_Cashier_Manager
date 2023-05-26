@@ -1,7 +1,5 @@
 package screens.clients
 
-import androidx.compose.foundation.ContextMenuArea
-import androidx.compose.foundation.ContextMenuItem
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,10 +11,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import model.Client
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
+import domain.model.Client
 import ui.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +34,23 @@ import java.awt.Dimension
 //        true
 //    )
 //}
+
+object ClientsTabScreen: Tab{
+    override val options: TabOptions
+        @Composable
+        get() =
+            TabOptions(
+                index = 0u,
+                "Клиенты",
+                painterResource("client.svg")
+            )
+
+    @Composable
+    override fun Content() {
+        ClientsScreen()
+    }
+
+}
 
 @Composable
 fun ClientsScreen(){
@@ -70,7 +88,6 @@ fun ClientsScreen(){
                 selectedClient = null
             },
             applyClient = { newClient ->
-                println(newClient)
                 clientList.add(newClient)
             }
         )
@@ -79,7 +96,7 @@ fun ClientsScreen(){
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
     ){
         Column {
-            ToolBar(
+            ToolPanel(
                 addBtnClick = {
                     selectedClient = null
                     clientInfoDialogIsVisible = true
@@ -134,7 +151,7 @@ fun ClientCard(
         modifier = Modifier.padding(4.dp)
     ) {
         StandardContextMenu(
-            redactClick = {
+            editClick = {
                 redactClient(client)
             },
             deleteClick = {
@@ -254,7 +271,7 @@ fun ClientInfoDialog(
                     }
                 )
             }
-            SaveNCancelButtons(
+            SaveOrCancelButtons(
                 cancelBtnClick = {
                     onCloseRequest()
                 },
