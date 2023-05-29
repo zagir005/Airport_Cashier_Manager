@@ -2,13 +2,14 @@ package screens.planes.list
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -25,6 +26,10 @@ class PlanesListScreen(
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val screenState = screenModel.state.collectAsState()
+
+        LaunchedEffect(Unit){
+            screenModel.loadPlanes()
+        }
 
         var showPlaneEditDialog by remember { mutableStateOf(false) }
         var editablePlane by remember { mutableStateOf<PlaneLocal?>(null) }

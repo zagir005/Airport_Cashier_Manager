@@ -1,13 +1,16 @@
 package screens.airports.ui
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.airport.model.AirportLocal
-import ui.card.CardTitleText
 import ui.LabelText
+import ui.card.CardTitleText
 import ui.card.head.EditDeleteHeadCard
 
 @Composable
@@ -33,7 +36,7 @@ fun AirportCard(
         deleteBtnClick = {
             deleteAirport(airport)
         },
-        cardModifier = Modifier.heightIn(120.dp,500.dp).padding(4.dp)
+        cardModifier = Modifier.heightIn(120.dp,500.dp).padding(8.dp)
     ){
         Box(
             modifier = Modifier.padding(8.dp)

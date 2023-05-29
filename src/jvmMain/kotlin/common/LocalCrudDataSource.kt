@@ -10,5 +10,4 @@ interface LocalCrudDataSource<T> {
     suspend fun update(obj: T)
     suspend fun removeById(id: ObjectId)
     suspend fun remove(obj: T)
-    suspend fun query(query: String): List<T>
 }

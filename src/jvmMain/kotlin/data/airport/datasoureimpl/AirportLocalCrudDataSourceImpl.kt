@@ -43,18 +43,12 @@ class AirportLocalCrudDataSourceImpl(private val database: AppDatabase): Airport
             query<AirportLocal>("id == $0", id).first().find()?.let {
                 delete(it)
             }
-
         }
     }
 
     override suspend fun remove(obj: AirportLocal) {
         database.db.write {
-            println("delete in crud")
             delete(findLatest(obj)!!)
         }
-    }
-
-    override suspend fun query(query: String): List<AirportLocal> {
-        return database.db.query<AirportLocal>(query).find()
     }
 }

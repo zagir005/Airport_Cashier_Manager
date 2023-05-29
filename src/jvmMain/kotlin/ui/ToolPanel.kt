@@ -45,13 +45,6 @@ fun ToolPanel(
             Spacer(
                 modifier = Modifier.width(8.dp)
             )
-            IconButton(
-                onClick = {
-                    filterBtnClick()
-                }
-            ){
-                Icon(painterResource("filter.svg"),"")
-            }
             Spacer(
                 modifier = Modifier.width(8.dp)
             )

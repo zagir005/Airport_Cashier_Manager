@@ -32,6 +32,10 @@ object AirportsTabScreen: Tab {
         val screenModel = rememberScreenModel { AirportScreenModel(AirportLocalCrudDataSourceImpl(AppDatabase())) }
         val screenState by screenModel.state.collectAsState()
 
+        LaunchedEffect(Unit){
+            screenModel.loadAirports()
+        }
+
         var isAirportDialogIsOpen by remember { mutableStateOf(false) }
         var editableAirportLocal by remember { mutableStateOf<AirportLocal?>(null) }
 
@@ -77,7 +81,6 @@ object AirportsTabScreen: Tab {
                     AirportsList(
                         state.list,
                         deleteAirport = {
-                            println("del $it")
                             screenModel.deleteAirport(it)
                         },
                         editAirport = {

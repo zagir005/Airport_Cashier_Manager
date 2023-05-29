@@ -3,7 +3,6 @@ package screens.airports
 import common.BaseStateScreenModel
 import data.airport.datasource.AirportLocalCrudDataSource
 import data.airport.model.AirportLocal
-import screens.planes.list.PlaneScreenState
 
 class AirportScreenModel(
     private val airportLocalCrudDataSource: AirportLocalCrudDataSource
@@ -12,7 +11,7 @@ class AirportScreenModel(
         loadAirports()
     }
 
-    private fun loadAirports(){
+    fun loadAirports(){
         launchIOCoroutine {
             updateState(
                 AirportScreenState.AirportsListLoaded(

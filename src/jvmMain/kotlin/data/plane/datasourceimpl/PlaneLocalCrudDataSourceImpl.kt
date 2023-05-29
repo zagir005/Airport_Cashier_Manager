@@ -4,10 +4,8 @@ import data.AppDatabase
 import data.plane.datasource.PlaneLocalCrudDataSource
 import data.plane.model.PlaneLocal
 import data.plane.model.PlaneSeatLocal
-import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.ext.query
 import org.mongodb.kbson.ObjectId
-import java.lang.IllegalArgumentException
 
 
 class PlaneLocalCrudDataSourceImpl(private val appDatabase: AppDatabase): PlaneLocalCrudDataSource {
@@ -105,8 +103,5 @@ class PlaneLocalCrudDataSourceImpl(private val appDatabase: AppDatabase): PlaneL
             delete(findLatest(obj)!!)
         }
     }
-
-    override suspend fun query(query: String): List<PlaneLocal> =
-        appDatabase.db.query<PlaneLocal>(query).find()
 
 }

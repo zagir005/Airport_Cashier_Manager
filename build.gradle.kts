@@ -26,7 +26,9 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation("org.jetbrains.compose.material3:material3-desktop:1.5.0-dev1043")
-                implementation("com.marosseleng.android:compose-material3-datetime-pickers:0.7.1")
+                implementation("ca.gosyer:compose-material-dialogs-core:0.9.0")
+                implementation("ca.gosyer:compose-material-dialogs-datetime:0.9.0")
+
                 implementation("io.realm.kotlin:library-base:1.8.0")
                 implementation("io.realm.kotlin:library-sync:1.8.0")
 

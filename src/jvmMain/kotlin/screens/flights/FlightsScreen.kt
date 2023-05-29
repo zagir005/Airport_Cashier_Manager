@@ -1,22 +1,21 @@
 package screens.flights
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import data.AppDatabase
+import data.flight.datasourceimpl.FlightLocalCrudDataSourceImpl
+import data.flight.model.FlightLocal
+import screens.flights.ui.FlightEditDialog
+import screens.flights.ui.FlightsList
 import ui.ToolPanel
 
 object FlightsTabScreen: Tab {
@@ -30,103 +29,77 @@ object FlightsTabScreen: Tab {
 
     @Composable
     override fun Content() {
-        FlightScreen()
-    }
+        val screenModel = rememberScreenModel { FlightScreenModel(FlightLocalCrudDataSourceImpl(AppDatabase())) }
+        val screenState by screenModel.state.collectAsState()
 
-}
+        LaunchedEffect(Unit){
+            screenModel.loadFlights()
+        }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FlightScreen(){
-    Column {
-        ToolPanel()
-        Divider(
-            modifier = Modifier.padding(2.dp),
-            thickness = 2.dp
-        )
-        LazyColumn{
-            items(10) {
-                Card(
-                    modifier = Modifier.padding(2.dp),
-                    onClick = {
+        var flightEditDialogIsOpen by remember { mutableStateOf(false) }
+        var editableFlight by remember { mutableStateOf<FlightLocal?>(null) }
 
+        if (flightEditDialogIsOpen && screenState is FlightScreenState.FlightListLoaded){
+            val state = (screenState as FlightScreenState.FlightListLoaded)
+            FlightEditDialog(
+                flightLocal =  editableFlight,
+                planeList =  state.planeList,
+                airportList =  state.airportList,
+                isOpen = flightEditDialogIsOpen,
+                update = {
+                    screenModel.updateFlight(it)
+                },
+                add = {
+                    screenModel.addFlight(it)
+                },
+                onClose = {
+                    flightEditDialogIsOpen = false
+                    editableFlight = null
+                    screenModel.loadFlights()
+                }
+            )
+        }
+
+        Column {
+            ToolPanel(
+                searchCall = {
+                    screenModel.flightSearch(it)
+                },
+                filterBtnClick = {
+
+                },
+                addBtnClick = {
+                    println("ADD CALL")
+                    editableFlight = null
+                    flightEditDialogIsOpen = true
+                }
+            )
+            when(val state = screenState){
+                FlightScreenState.Loading -> {
+                    Box(modifier = Modifier.fillMaxSize()){
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
                     }
-                ){
-                    FlightCard()
+                }
+                is FlightScreenState.FlightListLoaded -> {
+                    FlightsList(
+                        state.flightList,
+                        editFlight = {
+                            editableFlight = it
+                            flightEditDialogIsOpen = true
+                        },
+                        deleteFlight = {
+                            screenModel.removeFlights(it.id)
+                        },
+                        onClickFlight = {
+
+                        }
+                    )
                 }
             }
-        }
-    }
-}
 
-@Composable
-fun FlightCard(){
-    Row(
-        modifier = Modifier.padding(8.dp).height(IntrinsicSize.Min)
-    ){
-        Column(
-            modifier = Modifier.padding(4.dp)
-        ) {
-            Text("NORDWIND")
-            Text("N4 848")
-            Text("В767-300")
-        }
-        Column(
-            modifier = Modifier.padding(4.dp)
-        ) {
-            Text("Кол-во мест: 200")
-            Text("Бронь: 30")
-        }
-        Divider(
-            modifier = Modifier.padding(start = 30.dp, end = 30.dp).fillMaxHeight().width(1.dp),
-            color = Color.Black
-        )
-        Row(
-            modifier = Modifier.padding(4.dp).fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(4.dp)
-            ) {
-                Text("МХЧ")
-                Text("Махачкала")
-                Text("Шереметьево")
-                Text("08.09.2023\n12:00",textAlign = TextAlign.Center)
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(4.dp)
-            ) {
-                Image(painterResource("icon _airplane_.svg"),"", modifier = Modifier.width(100.dp).height(120.dp))
-            }
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(4.dp)
-            ) {
-                Text("МХЧ")
-                Text("Махачкала")
-                Text("Шереметьево")
-                Text("08.09.2023\n12:00", textAlign = TextAlign.Center)
-            }
         }
     }
-}
 
-@Preview
-@Composable
-fun PreviewFlightCard(){
-    MaterialTheme{
-        FlightCard()
-    }
-}
-@Preview
-@Composable
-fun PreviewFlightsScreen(){
-    MaterialTheme{
-        FlightScreen()
-    }
 }

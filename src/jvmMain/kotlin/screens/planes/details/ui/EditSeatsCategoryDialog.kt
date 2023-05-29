@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import data.plane.model.PlaneLocal
 import screens.planes.model.PlaneSeatCategory
 import ui.*
 import ui.icon.errorIcon
@@ -14,6 +15,7 @@ import ui.icon.errorIcon
 @Composable
 fun EditSeatsCategoryDialog(
     seatCategory: PlaneSeatCategory,
+    plane: PlaneLocal,
     isOpen: Boolean,
     addSeatCategory: (PlaneSeatCategory) -> Unit,
     updateSeatCategory: (PlaneSeatCategory) -> Unit,
@@ -36,7 +38,8 @@ fun EditSeatsCategoryDialog(
             var seatCategoryBaggageWeight by remember{ mutableStateOf(seatCategory.baggageWeight.toString()) }
             var seatCategoryCount by remember{ mutableStateOf(seatCategory.count.toString()) }
 
-            var categoryNameError by remember{ mutableStateOf(false) }
+            var categoryNameIsEmptyError by remember{ mutableStateOf(false) }
+            var categoryNameDuplicateError by remember{ mutableStateOf(false) }
             var categoryBaggageWeightEmptyError by remember{ mutableStateOf(false) }
             var categoryCountEmptyError by remember{ mutableStateOf(false) }
 
@@ -52,16 +55,18 @@ fun EditSeatsCategoryDialog(
                     Text("Название категории")
                 },
                 supportingText = {
-                    if (categoryNameError){
+                    if (categoryNameIsEmptyError){
                         Text("Поле должно быть заполнено")
+                    }else if (categoryNameDuplicateError){
+                        Text("Дублирование категорий")
                     }
                 },
                 trailingIcon = {
-                    if (categoryNameError){
+                    if (categoryNameIsEmptyError || categoryNameDuplicateError){
                         errorIcon()
                     }
                 },
-                isError = categoryNameError,
+                isError = categoryNameIsEmptyError || categoryNameDuplicateError,
                 modifier = Modifier.fillMaxWidth()
             )
             TextField(
@@ -107,7 +112,7 @@ fun EditSeatsCategoryDialog(
                     }
                 },
                 trailingIcon = {
-                    if (categoryNameError){
+                    if (categoryNameIsEmptyError){
                         errorIcon()
                     }
                 },
@@ -120,16 +125,20 @@ fun EditSeatsCategoryDialog(
                     onClose()
                 },
                 saveBtnClick = {
-                    categoryNameError = seatCategoryName.isEmpty()
+                    categoryNameIsEmptyError = seatCategoryName.isEmpty()
                     categoryBaggageWeightEmptyError = seatCategoryBaggageWeight.isEmpty()
                     categoryCountEmptyError = seatCategoryCount.isEmpty()
                     categoryBaggageWeightInputError = seatCategoryBaggageWeight.toIntOrNull() == null
                     categoryCountInputError = seatCategoryCount.toIntOrNull() == null ||
                             seatCategoryCount.toIntOrNull()?.equals(0) == true
+                    categoryNameDuplicateError = plane.seats.find {
+                        it.categoryName == seatCategoryName
+                    } != null
+
 
                     if (
-                        !categoryNameError && !categoryCountEmptyError && !categoryCountInputError &&
-                        !categoryBaggageWeightEmptyError && !categoryBaggageWeightInputError
+                        !categoryNameIsEmptyError && !categoryCountEmptyError && !categoryCountInputError &&
+                        !categoryBaggageWeightEmptyError && !categoryBaggageWeightInputError && !categoryNameDuplicateError
                     ){
                         if(isNewCategory){
                             addSeatCategory(

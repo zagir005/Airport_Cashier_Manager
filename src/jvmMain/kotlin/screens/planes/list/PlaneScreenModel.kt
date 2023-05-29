@@ -1,11 +1,8 @@
 package screens.planes.list
 
-import cafe.adriel.voyager.core.model.coroutineScope
 import common.BaseStateScreenModel
 import data.plane.datasource.PlaneLocalCrudDataSource
 import data.plane.model.PlaneLocal
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class PlaneScreenModel(
     private val planeDataSource: PlaneLocalCrudDataSource
@@ -14,10 +11,10 @@ class PlaneScreenModel(
     private var planesList: List<PlaneLocal> = mutableListOf()
 
     init {
-        loadUsers()
+        loadPlanes()
     }
 
-    private fun loadUsers() {
+    fun loadPlanes() {
         launchIOCoroutine {
             planesList = planeDataSource.getAll()
             updateState(
@@ -38,28 +35,28 @@ class PlaneScreenModel(
                 }
             ))
         } else {
-            loadUsers()
+            loadPlanes()
         }
     }
 
     fun updatePlane(plane: PlaneLocal) {
         launchIOCoroutine {
             planeDataSource.update(plane)
-            loadUsers()
+            loadPlanes()
         }
     }
 
     fun addPlane(plane: PlaneLocal) {
         launchIOCoroutine {
             planeDataSource.add(plane)
-            loadUsers()
+            loadPlanes()
         }
     }
 
     fun deletePlane(plane: PlaneLocal) {
         launchIOCoroutine {
             planeDataSource.remove(plane)
-            loadUsers()
+            loadPlanes()
         }
     }
 

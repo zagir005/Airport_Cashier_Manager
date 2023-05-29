@@ -2,6 +2,7 @@ package common
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import data.client.model.ClientLocal
 import java.util.*
 
 fun String.annotatedString(spanStyle: SpanStyle = SpanStyle()): AnnotatedString{
@@ -24,3 +25,6 @@ fun Boolean.gender(): String{
         "Женщина"
     }
 }
+
+fun ClientLocal.getInitialsName() =
+    "${this.lastName} ${this.firstName.first()}. ${this.patronymic.first()}. "
