@@ -10,7 +10,7 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -28,35 +28,51 @@ import screens.user.UserTabScreen
 import java.awt.Dimension
 
 fun main() = application {
-    var windowState = rememberWindowState(width = Dp.Unspecified, height = Dp.Unspecified)
     Window(
         onCloseRequest = ::exitApplication,
-        state = windowState
+        state = rememberWindowState(width = 500.dp, height = 600.dp)
     ) {
 
+
+        var auth by remember { mutableStateOf(true) }
         var user by remember { mutableStateOf<UserLocal?>(null) }
 
-        if (user != null) {
-            MainScreen(user!!)
-            window.size = Dimension(1000, 700)
-        } else {
+        if (auth){
             UserAuthScreen {
                 user = it
+                auth = false
             }
+            window.size = Dimension(500, 600)
+        } else {
+            MainScreen(user!!) {
+                user = null
+                auth = true
+            }
+            window.size = Dimension(1000, 700)
         }
     }
 }
 
 @Composable
-fun MainScreen(user: UserLocal) {
-    val tabItems = listOf(
-        UserTabScreen(user),
-        TicketsTabScreen,
-        FlightsTabScreen,
-        ClientsTabScreen,
-        AirportsTabScreen,
-        PlanesTabScreen,
-    )
+fun MainScreen(user: UserLocal, exit: () -> Unit) {
+    val tabItems = if (user.isAdmin){
+        listOf(
+            UserTabScreen(user, exit = exit),
+            TicketsTabScreen,
+            FlightsTabScreen(true),
+            ClientsTabScreen,
+            AirportsTabScreen,
+            PlanesTabScreen,
+        )
+    }else{
+        listOf(
+            UserTabScreen(user, exit = exit),
+            TicketsTabScreen,
+            FlightsTabScreen(false),
+            ClientsTabScreen,
+        )
+    }
+
 
     TabNavigator(TicketsTabScreen) { tabNavigator ->
         Row{

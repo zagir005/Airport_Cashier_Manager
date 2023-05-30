@@ -9,7 +9,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -63,5 +62,47 @@ fun ToolPanel(
             thickness = 2.dp
         )
     }
+}
 
+@Composable
+fun ToolPanel(
+    searchCall: (request: String) -> Unit = {}
+){
+    var searchValue by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ){
+        Row(
+            modifier = Modifier.padding(4.dp).fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextField(
+                value = searchValue,
+                onValueChange = { text: String ->
+                    searchValue = text
+                    searchCall(text)
+                },
+                label = {
+                    Text("Поиск")
+                },
+                singleLine = true,
+                leadingIcon = {
+                    Icon(Icons.Default.Search,"")
+                },
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+            Spacer(
+                modifier = Modifier.width(8.dp)
+            )
+        }
+
+        Divider(
+            modifier = Modifier.padding(2.dp),
+            thickness = 2.dp
+        )
+    }
 }

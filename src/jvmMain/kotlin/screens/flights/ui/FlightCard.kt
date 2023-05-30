@@ -2,7 +2,12 @@ package screens.flights.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +23,7 @@ import data.flight.model.FlightLocal
 import ui.LabelText
 import ui.NonLazyGrid
 import ui.card.CardTitleText
-import ui.card.head.EditDeleteHeadCard
+import ui.card.head.CustomHeadCard
 
 typealias FlightLocalLambda = (FlightLocal) -> Unit
 @Composable
@@ -26,21 +31,41 @@ fun FlightCard(
     flightLocal: FlightLocal,
     editFlight: FlightLocalLambda = {},
     deleteFlight: FlightLocalLambda = {},
+    isAdminMode: Boolean,
     onClickFlight: FlightLocalLambda = {}
 ){
-    EditDeleteHeadCard(
+    CustomHeadCard(
         title = {
             CardTitleText(
                 text = "Рейс ${flightLocal.flightNumber}",
                 rowScope = this,
                 textModifier = {
-                    it.padding(start = 4.dp)
+                    it.padding(4.dp)
                 }
             )
         },
-        editBtnClick = { editFlight(flightLocal) },
-        deleteBtnClick = { deleteFlight(flightLocal) },
-        cardModifier = Modifier.padding(4.dp)
+        firstBtn = {
+            if (isAdminMode){
+                IconButton(
+                    onClick = {
+                        editFlight(flightLocal)
+                    } ,
+                ){
+                    Icon(Icons.Default.Edit,"")
+                }
+            }
+        },
+        secondBtn = {
+            if (isAdminMode){
+                IconButton(
+                    onClick = {
+                        deleteFlight(flightLocal)
+                    } ,
+                ){
+                    Icon(Icons.Default.Clear,"")
+                }
+            }
+        },
     ){
         Row(
             modifier = Modifier.padding(8.dp).height(IntrinsicSize.Min)

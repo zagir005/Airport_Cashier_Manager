@@ -23,7 +23,7 @@ class PlaneSeatLocal: RealmObject {
 
             for (i in 1..10) {
                 val seat = PlaneSeatLocal()
-                seat.baggageWeight = 23 + random.nextInt(7)
+                seat.baggageWeight = 10 + random.nextInt(20)
 
                 val uniqueTariffs = mutableSetOf<String>()
                 while (uniqueTariffs.size < tariffCount) {

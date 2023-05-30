@@ -37,6 +37,7 @@ class AppDatabase {
     val db = Realm.open(config)
 
     init {
+
         GlobalScope.launch {
             db.write {
                 if (query<UserLocal>().find().isEmpty()){

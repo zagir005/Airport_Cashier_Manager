@@ -15,6 +15,7 @@ class PlaneLocal: RealmObject{
     var seats: RealmList<PlaneSeatLocal> = realmListOf()
 
     companion object {
+        val seats = PlaneSeatLocal.generateSeats(3)
         fun generatePlanes(count: Int): RealmList<PlaneLocal> {
             val planes = realmListOf<PlaneLocal>()
 
@@ -22,7 +23,7 @@ class PlaneLocal: RealmObject{
                 val plane = PlaneLocal()
                 plane.name = "Boeing " + (737 + Random().nextInt(3) * 100)
                 plane.codeName = "BN" + (10 + i)
-                plane.seats = PlaneSeatLocal.generateSeats()
+                plane.seats = seats
 
                 planes.add(plane)
             }

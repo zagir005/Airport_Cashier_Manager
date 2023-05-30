@@ -18,7 +18,7 @@ import screens.flights.ui.FlightEditDialog
 import screens.flights.ui.FlightsList
 import ui.ToolPanel
 
-object FlightsTabScreen: Tab {
+class FlightsTabScreen(val isAdminMode: Boolean): Tab {
     override val options: TabOptions
         @Composable
         get() = TabOptions(
@@ -61,19 +61,27 @@ object FlightsTabScreen: Tab {
         }
 
         Column {
-            ToolPanel(
-                searchCall = {
-                    screenModel.flightSearch(it)
-                },
-                filterBtnClick = {
+            if (isAdminMode){
+                ToolPanel(
+                    searchCall = {
+                        screenModel.flightSearch(it)
+                    },
+                    filterBtnClick = {
 
-                },
-                addBtnClick = {
-                    println("ADD CALL")
-                    editableFlight = null
-                    flightEditDialogIsOpen = true
-                }
-            )
+                    },
+                    addBtnClick = {
+                        println("ADD CALL")
+                        editableFlight = null
+                        flightEditDialogIsOpen = true
+                    }
+                )
+            }else{
+                ToolPanel(
+                    searchCall = {
+                        screenModel.flightSearch(it)
+                    }
+                )
+            }
             when(val state = screenState){
                 FlightScreenState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize()){
@@ -94,7 +102,8 @@ object FlightsTabScreen: Tab {
                         },
                         onClickFlight = {
 
-                        }
+                        },
+                        isAdminMode
                     )
                 }
             }

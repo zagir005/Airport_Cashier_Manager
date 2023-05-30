@@ -2,12 +2,14 @@ package screens.auth
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.screen.Screen
 import data.AppDatabase
 import data.users.datasourceimpl.UsersLocalCrudDataSourceImpl
 import data.users.model.UserAuth
@@ -83,7 +85,9 @@ fun UserAuthScreen(
                     }
                 },
                 isError = passwordIsEmptyError,
-                modifier = Modifier.fillMaxWidth()
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
             Button(

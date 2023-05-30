@@ -13,7 +13,8 @@ import common.plus
 fun LabelText(
     label: String,
     text: String,
-    style: TextStyle = MaterialTheme.typography.bodyLarge
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
+    modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier
 ){
-    Text(label.annotatedString(SpanStyle(Color.Gray)) + text, style = style)
+    Text(label.annotatedString(SpanStyle(Color.Gray)) + text, style = style, modifier = modifier)
 }

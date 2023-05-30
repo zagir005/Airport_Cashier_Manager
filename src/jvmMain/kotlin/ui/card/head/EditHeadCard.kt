@@ -94,7 +94,7 @@ fun EditDeleteHeadCard(
         title = title,
         firstBtn = {
             IconButton(
-                onClick = editBtnClick
+                onClick = editBtnClick,
             ){
                 Icon(Icons.Default.Edit,"")
             }

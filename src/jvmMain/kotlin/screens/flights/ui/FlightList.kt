@@ -10,7 +10,8 @@ fun FlightsList(
     flightsList: List<FlightLocal>,
     editFlight: FlightLocalLambda = {},
     deleteFlight: FlightLocalLambda = {},
-    onClickFlight: FlightLocalLambda = {}
+    onClickFlight: FlightLocalLambda = {},
+    isAdminMode: Boolean
 ){
     LazyColumn{
         items(flightsList){
@@ -18,6 +19,7 @@ fun FlightsList(
                 it,
                 editFlight,
                 deleteFlight,
+                isAdminMode,
                 onClickFlight
             )
         }
